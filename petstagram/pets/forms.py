@@ -24,6 +24,10 @@ class PetForm(forms.ModelForm):
         }
 
 
+class EditPetForm(PetForm):
+    ...
+
+
 class PetDeleteForm(PetForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

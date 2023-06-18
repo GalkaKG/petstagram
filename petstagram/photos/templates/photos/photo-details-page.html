@@ -60,9 +60,9 @@
                 </div>
 
                 <!-- Start Pet Photo -->
-                <div class="imgBx" id="place the id of the photo here">
+                <div class="imgBx" id="{{ photo.id }}">
                     <!-- Pet Photo -->
-                    <img src="{% static 'images/axolotl.jpeg' %}" alt="post" class="cover">
+                    <img src="{{ photo.photo.url }}" alt="post" class="cover">
                 </div>
                 <!-- End Pet Photo -->
 
@@ -79,7 +79,7 @@
 									<a href="{% url 'like' photo.id %}">
 
 										<!-- IF user has liked the photo -->
-                                        {% if likes %}
+                                        {% if photo.like_set.all %}
                                         <svg style="color: red"
                                              xmlns="http://www.w3.org/2000/svg"
                                              width="24"
@@ -144,7 +144,7 @@
                     <!-- End Like and Share Buttons Section -->
 
                     <!-- Number of Likes for the Photo -->
-                    <p class="likes">{{ likes.count }} likes</p>
+                    <p class="likes">{{ photo.like_set.count }} likes</p>
 
                     <!-- Start Tagged Pets Section-->
                 {% for pet in photo.tagged_pets.all %}
@@ -202,11 +202,9 @@
                     </div>
 
                     <!-- Start Add Comments Form -->
-                    <form method="post" action="#">
-                        <label for="id_body">Body:</label>
-                        <textarea name="body" cols="40" rows="10" placeholder="Add comment..." maxlength="300"
-                                  required="" id="id_body"></textarea>
-                        <!-- Post Comments Button -->
+                    <form method="post" action="{% url 'comment' photo.id %}">
+                       {{ comment_form }}
+                        {% csrf_token %}
                         <button type="submit">Post</button>
                     </form>
                     <!-- End Add Comments Form -->
