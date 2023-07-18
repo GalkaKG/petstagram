@@ -26,3 +26,8 @@ class Like(models.Model):
         Photo,
         on_delete=models.CASCADE,
     )
+
+    user = models.ForeignKey(
+        'accounts.PetstagramUser',
+        on_delete=models.CASCADE,
+    )

@@ -22,10 +22,7 @@
                         <h3>
                             <!-- Link to User Profile Page -->
                             <a href="{% url 'profile-details' photo.user.pk %}">
-                                <!-- if user has first name and last name -->
-                                Diyan Kalaydzhiev
-                                <!-- else -->
-                                <!-- show user username -->
+                                {{ photo.user.get_user_name }}
                             </a>
                             <br>
                             {% if photo.location %}
@@ -50,7 +47,8 @@
                             <span class="heart">
 									<a href="{% url 'like' photo.id %}">
 										<!-- if user has liked the photo -->
-                                        {% if photo.like_set.all %}
+{#                                        {% if photo.like_set.all %}#}
+                                        {% if photo.id in all_liked_photos_by_request_user %}
                                         <svg style="color: red"
                                              xmlns="http://www.w3.org/2000/svg"
                                              width="24"
@@ -120,7 +118,7 @@
 
     <!-- Start Tagged Pets -->
     {% for pet in photo.tagged_pets.all %}
-        <a href="{% url 'details_pet' 'username' pet.slug %}">
+        <a href="{% url 'details_pet' pet.user.username pet.slug %}">
             <p class="message">
                 <b>{{ pet.name }}</b>
             </p>

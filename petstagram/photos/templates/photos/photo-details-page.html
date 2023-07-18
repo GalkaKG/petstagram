@@ -13,7 +13,7 @@
                     <div class="userDetails">
 
                         <!-- Link to User Profile Details Page-->
-                        <a href="#">
+                        <a href="{% url 'profile-details' photo.user.id %}">
                             <div class="profilepic">
                                 <div class="profile_img">
                                     <div class="image">
@@ -25,9 +25,9 @@
                         <h3>
 
                             <!-- Link to User Profile Details Page -->
-                            <a href="#">
+                            <a href="{% url 'profile-details' photo.user.id %}">
                                 <!-- IF user has first name and last name -->
-                                Diyan Kalaydzhiev
+                               {{ photo.user.get_user_name}}
                                 <!-- else -->
                                 <!-- show user username -->
                             </a>
@@ -56,15 +56,11 @@
                         </h3>
                     </div>
                     <!-- End User Details and Image Location Section -->
-
                 </div>
 
-                <!-- Start Pet Photo -->
                 <div class="imgBx" id="{{ photo.id }}">
-                    <!-- Pet Photo -->
                     <img src="{{ photo.photo.url }}" alt="post" class="cover">
                 </div>
-                <!-- End Pet Photo -->
 
                 <div class="bottom">
 

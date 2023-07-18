@@ -10,7 +10,10 @@ def index(request):
     comment_form = CommentForm()
     search_form = SearchForm()
     user = request.user
-    all_liked_photos_by_request_user = [like.to_photo_id for like in user.like_set.all()]
+    all_liked_photos_by_request_user = []
+
+    if user.is_authenticated:
+        all_liked_photos_by_request_user = [like.to_photo_id for like in user.likes.all()]
 
     if request.method == 'POST':
         search_form = SearchForm(request.POST)
@@ -29,13 +32,14 @@ def index(request):
 
 def like_functionality(request, photo_id):
     photo = Photo.objects.get(id=photo_id)
-    liked_object = Like.objects.filter(to_photo_id=photo_id, user=request.user).first()
+    liked_object = Like.objects.filter(to_photo_id=photo_id, users=request.user).first()
 
     if liked_object:
         liked_object.delete()
     else:
-        like = Like(to_photo=photo, user=request.user)
+        like = Like(to_photo=photo)
         like.save()
+        like.users.set([request.user])
 
     return redirect(request.META['HTTP_REFERER'] + f'#{photo_id}')
 

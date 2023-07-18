@@ -33,10 +33,23 @@ class UserEditView(generic.UpdateView):
         return reverse_lazy('profile-details', kwargs={'pk': self.object.pk})
 
 
-def show_profile_details(request, pk):
-    return render(request, template_name='accounts/profile-details-page.html')
+class UserDetailsView(generic.DetailView):
+    model = PetstagramUser
+    template_name = 'accounts/profile-details-page.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        total_likes_count = sum(p.like_set.count() for p in self.object.photo_set.all())
+        owned_pets = self.object.pet_set.all()
+        user_photos = self.object.photo_set.all()
 
+        context.update({
+            'total_likes_count': total_likes_count,
+            'owned_pets': owned_pets,
+            'user_photos': user_photos
+        })
+
+        return context
 
 
 def delete_profile(request):
