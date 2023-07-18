@@ -52,5 +52,10 @@ class UserDetailsView(generic.DetailView):
         return context
 
 
-def delete_profile(request):
-    return render(request, template_name='accounts/profile-delete-page.html')
+class UserDeleteView(generic.DeleteView):
+    model = PetstagramUser
+    template_name = 'accounts/profile-delete-page.html'
+    next_page = reverse_lazy('home')
+
+    def post(self, request, *args, **kwargs):
+        self.request.user.delete()

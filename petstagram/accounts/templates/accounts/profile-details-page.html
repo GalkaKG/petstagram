@@ -41,13 +41,8 @@
                     <span>{{ total_likes_count }}</span>
                     <p>likes</p>
                 </div>
-                <!-- User First and Last Name IF Added -->
                 <h3 class="names">{{ petstagramuser.get_user_name }}</h3>
-
-                <!-- User Email Address -->
                 <p class="email">{{ petstagramuser.email }}</p>
-
-                <!-- User Gender IF Added -->
                 <p class="gender">{{ petstagramuser.gender }}</p>
             </div>
         </div>
@@ -66,7 +61,6 @@
                                      alt="pet img">
                             </div>
                         </div>
-                        <!-- Pet Name -->
                         <p>{{ pet.name }}</p>
                     </div>
                 </a>
@@ -76,18 +70,14 @@
         </div>
         <!-- End Pets Data Section -->
 
-        <!-- Start Last Uploaded Photos Section -->
         <div class="pet-photos">
             {% for photo in user_photos %}
-            <!-- Link to Last Uploaded Pet Photo -->
-            <a href="#">
-                <!-- Pet Photo -->
+            <a href="{% url 'details_photo' photo.pk %}">
                 <img src="{{ photo.photo.url }}"
                      alt="pet img">
             </a>
             {% endfor %}
         </div>
-        <!-- End Last Uploaded Photos Section -->
     </div>
 
 {% endblock %}
