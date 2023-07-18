@@ -1,8 +1,16 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views import generic
+
+from petstagram.accounts.forms import PetstagramUserCreateForm
+from petstagram.accounts.models import PetstagramUser
 
 
-def register(request):
-    return None
+class UserRegisterView(generic.CreateView):
+    model = PetstagramUser
+    form_class = PetstagramUserCreateForm
+    template_name = 'accounts/register-page.html'
+    success_url = reverse_lazy('login')
 
 
 def login(request):
