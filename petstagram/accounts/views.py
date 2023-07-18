@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib.auth import views as auth_views
 
-from petstagram.accounts.forms import PetstagramUserCreateForm
+from petstagram.accounts.forms import PetstagramUserCreateForm, LoginForm
 from petstagram.accounts.models import PetstagramUser
 
 
@@ -13,8 +14,14 @@ class UserRegisterView(generic.CreateView):
     success_url = reverse_lazy('login')
 
 
-def login(request):
-    return None
+class UserLoginView(auth_views.LoginView):
+    form_class = LoginForm
+    template_name = 'accounts/login-page.html'
+    next_page = reverse_lazy('home')
+
+
+class UserLogoutView(auth_views.LogoutView):
+    next_page = reverse_lazy('login')
 
 
 def show_profile_details(request, pk):
