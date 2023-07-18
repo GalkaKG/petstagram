@@ -9,7 +9,10 @@ from petstagram.pets.forms import PetForm, PetDeleteForm
 def add_pet(request):
     form = PetForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        pet = form.save(commit=False)
+        pet_user = request.user
+        pet.save()
+        form.save_m2m()
         return redirect('profile-details', pk=1)
 
     context = {

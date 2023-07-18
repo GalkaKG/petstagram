@@ -1,6 +1,8 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 
+from petstagram.accounts.models import PetstagramUser
+
 
 class Pet(models.Model):
     name = models.CharField(
@@ -18,6 +20,8 @@ class Pet(models.Model):
         unique=True,
         editable=False,
     )
+
+    user = models.ForeignKey(to=PetstagramUser, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

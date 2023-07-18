@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-
-    <!-- Start Edit Profile Section -->
     <div class="edit-delete">
         <h2>Edit Profile</h2>
-        <!-- Start Edit Profile From -->
         <form method="post" action="">
             {% csrf_token %}
             {% for field in form %}
@@ -36,12 +33,7 @@
                 <br>
             {% endfor %}
 
-            <!-- Edit Profile Button -->
             <button class="edit-btn" type="submit">Edit</button>
         </form>
-        <!-- End Edit Profile Form -->
-
     </div>
-    <!-- End Edit Profile Section -->
-
 {% endblock %}
