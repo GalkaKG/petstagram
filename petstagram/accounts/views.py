@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth import views as auth_views
 
-from petstagram.accounts.forms import PetstagramUserCreateForm, LoginForm
+from petstagram.accounts.forms import PetstagramUserCreateForm, LoginForm, PetstagramUserEditForm
 from petstagram.accounts.models import PetstagramUser
 
 
@@ -24,12 +24,19 @@ class UserLogoutView(auth_views.LogoutView):
     next_page = reverse_lazy('login')
 
 
+class UserEditView(generic.UpdateView):
+    model = PetstagramUser
+    form_class = PetstagramUserEditForm
+    template_name = 'accounts/profile-edit-page.html'
+
+    def get_success_url(self):
+        return reverse_lazy('profile-details', kwargs={'pk': self.object.pk})
+
+
 def show_profile_details(request, pk):
     return render(request, template_name='accounts/profile-details-page.html')
 
 
-def edit_profile(request):
-    return render(request, template_name='accounts/profile-edit-page.html')
 
 
 def delete_profile(request):
